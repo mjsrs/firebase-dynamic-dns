@@ -23,7 +23,7 @@ def main():
     hb = firebase.FirebaseApplication(config.firebase['url'], auth)
     output = {"last_update": {".sv": "timestamp"}}
     # get local ip
-    output['local_ip'] = socket.gethostbyname(socket.gethostname())
+    output['local_ip'] = get_local_ip()
     # get local date and time
     output['local_datetime'] = datetime.datetime.now()
     try:
@@ -33,6 +33,18 @@ def main():
         message = e
     print output
     hb.put('/', config.firebase['machine_name'], output)
+
+
+def get_local_ip():
+    s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+    try:
+        s.connect(('8.8.8.8', 80))
+        ip = s.getsockname()[0]
+    except:
+        ip = '127.0.0.1'
+    finally:
+        s.close()
+    return ip
 
 
 if __name__ == "__main__":
