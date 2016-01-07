@@ -9,7 +9,7 @@ echo "$MACHINE ip: $IP"
 tput setaf 1;tput smul;
 echo "starting sync...password + yubikey OTP required"
 tput setaf 7;tput rmul;
-eval "rsync -ahv prodx/* $USER@$IP:/opt/prodx"
+eval "rsync -ahv prodx/. $USER@$IP:/opt/prodx"
 tput setaf 2;
 echo "Done";
 tput setaf 7;
